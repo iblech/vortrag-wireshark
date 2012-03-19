@@ -1,0 +1,87 @@
+\documentclass[12pt,compress]{beamer}
+\usepackage{url}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{tabto}
+\usepackage[normalem]{ulem}
+
+\title{Netzwerksniffing mit Wireshark}
+\author[Ingo Blechschmidt]{Ingo Blechschmidt \\ \ \\ Augsburger Linux-Infotag \\ 24. März 2012}
+\date[2012-03-24]{\begin{minipage}{8cm}\begin{block}{Zum Mitmachen\ldots}\ldots
+mit WLAN \emph{WIRESHARK} verbinden!\end{block}\end{minipage}}
+
+\usetheme{Antibes}
+\useoutertheme{split}
+\usecolortheme{orchid}
+\usefonttheme{serif}
+\useinnertheme{rectangles}
+\usepackage{palatino}
+\setbeamercovered{invisible}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{frametitle}[default][center]
+
+\newcommand{\floatbox}[3]{%
+  \raisebox{0pt}[0pt][0pt]{%
+    \begin{picture}(0,0)(#1,#2)#3\end{picture}\leavevmode%
+  }%
+}
+
+\newenvironment{changemargin}[2]{% 
+  \begin{list}{}{% 
+    \setlength{\topsep}{0pt}% 
+    \setlength{\leftmargin}{#1}% 
+    \setlength{\rightmargin}{#2}% 
+    \setlength{\listparindent}{\parindent}% 
+    \setlength{\itemindent}{\parindent}% 
+    \setlength{\parsep}{\parskip}% 
+  }% 
+  \item[]}{\end{list}} 
+
+\newcommand{\itembull}{{\usebeamercolor[fg]{itemize item}\usebeamertemplate{itemize item}}}
+
+\linespread{1.1}
+
+\begin{document}
+
+\frame{\floatbox{-240}{7}{\includegraphics[scale=0.25]{images/flosse.png}}\titlepage}
+
+% Netzwerksniffing mit Wireshark
+% 
+% Wireshark ist ein freies Werkzeug, mit dem man aus- und eingehenden
+% Netzwerkverkehr mitschneiden und analysieren kann. Das ist allgemein nützlich,
+% wenn man wissen möchte, wie Daten genau aussehen, die Programme, Webseiten,
+% Smartphones und sonstige Geräte übers Netzwerk schicken und empfangen.
+% 
+% Konkret kann man Verbindungsprobleme diagnostizieren, Netzwerkprotokolle
+% verstehen, das eigene Sicherheitsbewusstsein schärfen oder herausfinden, welche
+% Informationen Programme beim nach Hause telefonieren übertragen.
+% 
+% Der Vortrag wird in die Bedienung von Wireshark einführen und dann mehrere
+% Beispiele zeigen und erklären.
+% 
+% Ideen:
+% * Timing von Google, Microsoft usw.
+% * Preloading bei Chrome
+% * MTU!
+
+% Gliederung:
+% 1. Grundlagen
+%    Was ist Wireshark, wie funktioniert es?
+%    Legalität
+% 2. Live-Beispiele
+%    Preloading bei Chrome
+%    ARP-Poisoning, Website-Login
+
+\appendix
+\section{Bildquellen}
+\frame[t]{\frametitle{Bildquellen}
+  \tiny
+  \begin{itemize}
+    \item \url{http://smaportal.files.wordpress.com/2009/05/wireshark_icon.png}
+  \end{itemize}
+}
+
+\end{document}
+
+\end{document}
