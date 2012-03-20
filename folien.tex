@@ -7,7 +7,7 @@
 \usepackage[normalem]{ulem}
 
 \title{Netzwerksniffing mit Wireshark}
-\author[Ingo Blechschmidt]{Ingo Blechschmidt \\ \ \\ Augsburger Linux-Infotag \\ 24. März 2012}
+\author[Ingo Blechschmidt]{Ingo Blechschmidt \\[0.5em] Augsburger Linux-Infotag \\ 24. März 2012}
 \date[2012-03-24]{\begin{minipage}{8cm}\begin{block}{Zum Mitmachen\ldots}\ldots
 mit WLAN \emph{WIRESHARK} verbinden!\end{block}\end{minipage}}
 
@@ -44,22 +44,22 @@ mit WLAN \emph{WIRESHARK} verbinden!\end{block}\end{minipage}}
 
 \begin{document}
 
-\frame{\floatbox{-240}{7}{\includegraphics[scale=0.25]{images/flosse.png}}\titlepage}
+\frame{\floatbox{-240}{10}{\includegraphics[scale=0.25]{images/flosse.png}}\titlepage}
 
 % Netzwerksniffing mit Wireshark
-% 
+%
 % Wireshark ist ein freies Werkzeug, mit dem man aus- und eingehenden
 % Netzwerkverkehr mitschneiden und analysieren kann. Das ist allgemein nützlich,
 % wenn man wissen möchte, wie Daten genau aussehen, die Programme, Webseiten,
 % Smartphones und sonstige Geräte übers Netzwerk schicken und empfangen.
-% 
+%
 % Konkret kann man Verbindungsprobleme diagnostizieren, Netzwerkprotokolle
 % verstehen, das eigene Sicherheitsbewusstsein schärfen oder herausfinden, welche
 % Informationen Programme beim nach Hause telefonieren übertragen.
-% 
+%
 % Der Vortrag wird in die Bedienung von Wireshark einführen und dann mehrere
 % Beispiele zeigen und erklären.
-% 
+%
 % Ideen:
 % * Timing von Google, Microsoft usw.
 % * Preloading bei Chrome
@@ -68,10 +68,81 @@ mit WLAN \emph{WIRESHARK} verbinden!\end{block}\end{minipage}}
 % Gliederung:
 % 1. Grundlagen
 %    Was ist Wireshark, wie funktioniert es?
+%    Motivation
 %    Legalität
+%    Alternativen: tcpdump, ???
 % 2. Live-Beispiele
 %    Preloading bei Chrome
 %    ARP-Poisoning, Website-Login
+
+\section{Grundlagen}
+\subsection{Netzwerksniffing}
+\frame[t]{\frametitle{Mitschneiden von Netzwerkverkehr}
+  \begin{beamercolorbox}[sep=1em,wd=\textwidth]{block body}
+    \textbf{Leitfrage:} \\
+    Wie sehen die Daten aus, die mein Rechner verschickt und empfängt?
+  \end{beamercolorbox}
+  \vfill
+
+  Wozu das?
+  \begin{itemize}
+    \item Um Netzwerkprotokolle zu verstehen.
+    \item Um Verbindungsprobleme zu diagnostizieren.
+    \item Um das eigene Sicherheitsbewusstsein zu schärfen.
+    \item Um verborgene Hintergrundkommunikation
+          aufzudecken.
+  \end{itemize}
+
+  \floatbox{-280}{-100}{\includegraphics[scale=0.2]{images/sniffing.jpeg}}
+}
+
+\subsection{Über Wireshark}
+\frame[t]{\frametitle{Über Wireshark}
+  \begin{itemize}
+    \item Wireshark: freies Werkzeug zum Netzwerksniffing
+    \item erste Veröffentlichung 1998 durch Gerald Combs
+  \end{itemize}
+
+  \begin{itemize}
+    \item \texttt{\$ apt-get install wireshark}
+    \item keine Magie -- Daten eh im Klartext vorhanden
+    \item Vorsicht: Sicherheitsprobleme in Wireshark selbst
+  \end{itemize}
+
+  \begin{itemize}
+    \item Alternativen: tcpdump; \\ begrenzt auch Firefox, Chrome
+  \end{itemize}
+
+  \vfill
+  \floatbox{-260}{-22}{\begin{tabular}{@{}l@{}}\includegraphics[scale=0.65]{images/gerald_combs.png}\\[-0.4em]\footnotesize Gerald Combs\end{tabular}}
+}
+
+\subsection{Netzwerkarchitektur}
+\frame[t]{\frametitle{Netzwerkarchitektur}
+  \begin{itemize}
+    \item Versand und Empfang von Netzwerkdaten in einzelnen Paketen
+    \item typische Maximalgröße: 1500 Bytes bei Ethernet
+    \item Adressierungsarten:
+          \begin{tabbing}
+            global: \= MAC-Adressen, \= \kill
+            global: \> Domainnamen,  \> etwa \texttt{luga.de} \\
+            global: \> IP-Adressen,  \> etwa \texttt{193.99.144.80} \\
+            lokal:  \> MAC-Adressen, \> etwa \texttt{00:16:76:7d:00:c2}
+          \end{tabbing}
+  \end{itemize}
+}
+
+\section{Live-Vorführungen}
+\frame[t]{\frametitle{Live-Vorführungen}
+  \begin{enumerate}
+    \item Erste Schritte: Ping \\
+          Demonstration von ARP, DNS und ICMP
+    \item Webseitenaufruf
+    \item Start von Google Chrome
+    \item unverschlüsselter Login
+    \item ARP-Spoofing
+  \end{enumerate}
+}
 
 \appendix
 \section{Bildquellen}
@@ -79,6 +150,8 @@ mit WLAN \emph{WIRESHARK} verbinden!\end{block}\end{minipage}}
   \tiny
   \begin{itemize}
     \item \url{http://smaportal.files.wordpress.com/2009/05/wireshark_icon.png}
+    \item \url{http://www.techiwarehouse.com/userfiles/sniffing2.jpg}
+    \item \url{http://www.soldierx.com/system/files/hdb/gerald_combs.png}
   \end{itemize}
 }
 
