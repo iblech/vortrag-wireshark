@@ -1,0 +1,8 @@
+Auf Carinas Laptop:
+ifconfig eth0 192.168.3.1 up
+service isc-dhcp-server start
+routing.sh start
+
+Bei mir:
+Mit WIRESHARK verbinden.
+Später routing.sh start ausführen.

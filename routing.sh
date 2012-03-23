@@ -7,7 +7,7 @@ case $1 in
         iptables -F
         iptables -F -t nat
         iptables -A FORWARD -j ACCEPT
-        iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+        iptables -t nat -A POSTROUTING -j MASQUERADE
         ;;
 
     redirect-http)
