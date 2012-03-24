@@ -21,6 +21,12 @@ mit WLAN \emph{WIRESHARK} verbinden!\end{block}\end{minipage}}
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{frametitle}[default][center]
 
+\newcommand*\oldmacroB{}%
+\let\oldmacroB\insertshorttitle%
+\renewcommand*\insertshorttitle{%
+	\oldmacroB\hfill%
+  \insertframenumber\,/\,\inserttotalframenumber\hfill}
+
 \newcommand{\floatbox}[3]{%
   \raisebox{0pt}[0pt][0pt]{%
     \begin{picture}(0,0)(#1,#2)#3\end{picture}\leavevmode%
@@ -132,14 +138,19 @@ mit WLAN \emph{WIRESHARK} verbinden!\end{block}\end{minipage}}
   \end{itemize}
 }
 
-\section{Live-Vorführungen}
-\frame[t]{\frametitle{Live-Vorführungen}
+\section{Live-Vorführung}
+\frame[t]{\frametitle{Live-Vorführung}
   \begin{enumerate}
     \item Erste Schritte: Ping \\
           Demonstration von ARP, DNS und ICMP
-    \item Webseitenaufruf
-    \item Start von Google Chrome
+    \vfill
+    \item Start von Google Chrome \\
+          DNS-Prefetching, DNS-Tests
+    \vfill
+    \item Webseitenaufruf, Pre-Rendering
+    \vfill
     \item unverschlüsselter Login
+    \vfill
     \item ARP-Spoofing
   \end{enumerate}
 }

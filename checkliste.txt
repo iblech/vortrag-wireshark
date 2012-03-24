@@ -1,8 +1,24 @@
 Auf Carinas Laptop:
 ifconfig eth0 192.168.3.1 up
+In dhcpd.conf den richtigen Nameserver eintragen
 service isc-dhcp-server start
 routing.sh start
 
 Bei mir:
 Mit WIRESHARK verbinden.
 Später routing.sh start ausführen.
+
+ARP Scan:
+nmap -sP 10.0.0.0/24
+
+Unmittelbar vor dem Vortrag:
+Handy ausschalten!
+Einen leeren Firefox starten
+zfboard.de als Beispiel für unverschlüsselten Login verwenden
+Zum Spoofen: arpspoof -i wlan0 -t 10.0.0.141 10.0.0.1
+
+Nach dem LIT:
+Auf Carinas Laptop: Eintrag in /etc/interfaces entfernen, isc-dhcp-server nicht beim Booten starten
+Auf WLAN-Router: SSID zurückstellen, WEP anstellen, ADSL aktivieren
+Auf allen PCs: 10.0.0.1 statt 10.0.0.10
+Auf Mamas PC: ADSL deaktivieren
