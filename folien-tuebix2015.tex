@@ -1,0 +1,171 @@
+\documentclass[12pt,compress]{beamer}
+\usepackage{url}
+\usepackage{ucs}
+\usepackage[utf8x]{inputenc}
+\usepackage[ngerman]{babel}
+\usepackage{tabto}
+\usepackage[normalem]{ulem}
+
+\title{Netzwerksniffing mit Wireshark}
+\author[Ingo Blechschmidt]{Ingo Blechschmidt \\[0.5em] Tübinger Linuxtag \\ 13. Juni 2015}
+\date[2014-06-13]{\begin{minipage}{8cm}\begin{block}{Zum Mitmachen\ldots}\ldots
+mit WLAN \emph{Wireshark} verbinden!\end{block}\end{minipage}}
+
+\usetheme{Antibes}
+\useoutertheme{split}
+\usecolortheme{orchid}
+\usefonttheme{serif}
+\useinnertheme{rectangles}
+\usepackage{palatino}
+\setbeamercovered{invisible}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{frametitle}[default][center]
+
+\newcommand*\oldmacroB{}%
+\let\oldmacroB\insertshorttitle%
+\renewcommand*\insertshorttitle{%
+	\oldmacroB\hfill%
+  \insertframenumber\,/\,\inserttotalframenumber\hfill}
+
+\newcommand{\floatbox}[3]{%
+  \raisebox{0pt}[0pt][0pt]{%
+    \begin{picture}(0,0)(#1,#2)#3\end{picture}\leavevmode%
+  }%
+}
+
+\newenvironment{changemargin}[2]{% 
+  \begin{list}{}{% 
+    \setlength{\topsep}{0pt}% 
+    \setlength{\leftmargin}{#1}% 
+    \setlength{\rightmargin}{#2}% 
+    \setlength{\listparindent}{\parindent}% 
+    \setlength{\itemindent}{\parindent}% 
+    \setlength{\parsep}{\parskip}% 
+  }% 
+  \item[]}{\end{list}} 
+
+\newcommand{\itembull}{{\usebeamercolor[fg]{itemize item}\usebeamertemplate{itemize item}}}
+
+\linespread{1.1}
+
+\begin{document}
+
+\frame{\floatbox{-240}{10}{\includegraphics[scale=0.25]{images/flosse.png}}\titlepage}
+
+% Netzwerksniffing mit Wireshark
+%
+% Wireshark ist ein freies Werkzeug, mit dem man aus- und eingehenden
+% Netzwerkverkehr mitschneiden und analysieren kann. Das ist allgemein nützlich,
+% wenn man wissen möchte, wie Daten genau aussehen, die Programme, Webseiten,
+% Smartphones und sonstige Geräte übers Netzwerk schicken und empfangen.
+%
+% Konkret kann man Verbindungsprobleme diagnostizieren, Netzwerkprotokolle
+% verstehen, das eigene Sicherheitsbewusstsein schärfen oder herausfinden, welche
+% Informationen Programme beim nach Hause telefonieren übertragen.
+%
+% Der Vortrag wird in die Bedienung von Wireshark einführen und dann mehrere
+% Beispiele zeigen und erklären.
+%
+% Ideen:
+% * Timing von Google, Microsoft usw.
+% * Preloading bei Chrome
+% * MTU!
+
+% Gliederung:
+% 1. Grundlagen
+%    Was ist Wireshark, wie funktioniert es?
+%    Motivation
+%    Legalität
+%    Alternativen: tcpdump, ???
+% 2. Live-Beispiele
+%    Preloading bei Chrome
+%    ARP-Poisoning, Website-Login
+
+\section{Grundlagen}
+\subsection{Netzwerksniffing}
+\frame[t]{\frametitle{Mitschneiden von Netzwerkverkehr}
+  \begin{beamercolorbox}[sep=1em,wd=\textwidth]{block body}
+    \textbf{Leitfrage:} \\
+    Wie sehen die Daten aus, die mein Rechner verschickt und empfängt?
+  \end{beamercolorbox}
+  \vfill
+
+  Wozu das?
+  \begin{itemize}
+    \item Um Netzwerkprotokolle zu verstehen.
+    \item Um Verbindungsprobleme zu diagnostizieren.
+    \item Um das eigene Sicherheitsbewusstsein zu schärfen.
+    \item Um verborgene Hintergrundkommunikation
+          aufzudecken.
+  \end{itemize}
+
+  \floatbox{-280}{-100}{\includegraphics[scale=0.2]{images/sniffing.jpeg}}
+}
+
+\subsection{Über Wireshark}
+\frame[t]{\frametitle{Über Wireshark}
+  \begin{itemize}
+    \item Wireshark: freies Werkzeug zum Netzwerksniffing
+    \item erste Veröffentlichung 1998 durch Gerald Combs
+  \end{itemize}
+
+  \begin{itemize}
+    \item \texttt{\$ apt-get install wireshark}
+    \item keine Magie -- Daten eh im Klartext vorhanden
+    \item Vorsicht: Sicherheitsprobleme in Wireshark selbst
+  \end{itemize}
+
+  \begin{itemize}
+    \item Alternativen: tcpdump; \\ begrenzt auch Firefox, Chrome
+  \end{itemize}
+
+  \vfill
+  \floatbox{-260}{-22}{\begin{tabular}{@{}l@{}}\includegraphics[scale=0.65]{images/gerald_combs.png}\\[-0.4em]\footnotesize Gerald Combs\end{tabular}}
+}
+
+\subsection{Netzwerkarchitektur}
+\frame[t]{\frametitle{Netzwerkarchitektur}
+  \begin{itemize}
+    \item Versand und Empfang von Netzwerkdaten in einzelnen Paketen
+    \item typische Maximalgröße: 1500 Bytes bei Ethernet
+    \item Adressierungsarten:
+          \begin{tabbing}
+            global: \= MAC-Adressen, \= \kill
+            global: \> Domainnamen,  \> etwa \texttt{luga.de} \\
+            global: \> IP-Adressen,  \> etwa \texttt{193.99.144.80} \\
+            lokal:  \> MAC-Adressen, \> etwa \texttt{00:16:76:7d:00:c2}
+          \end{tabbing}
+  \end{itemize}
+}
+
+\section{Live-Vorführung}
+\frame[t]{\frametitle{Live-Vorführung}
+  \begin{enumerate}
+    \item Erste Schritte: Ping \\
+          Demonstration von ARP, DNS und ICMP
+    \vfill
+    \item Start von Google Chrome \\
+          DNS-Prefetching, DNS-Tests
+    \vfill
+    \item Webseitenaufruf, Pre-Rendering
+    \vfill
+    \item unverschlüsselter Login
+    \vfill
+    \item ARP-Spoofing (Debian-Paket dsniff)
+  \end{enumerate}
+}
+
+\appendix
+\section{Bildquellen}
+\frame[t]{\frametitle{Bildquellen}
+  \tiny
+  \begin{itemize}
+    \item \url{http://smaportal.files.wordpress.com/2009/05/wireshark_icon.png}
+    \item \url{http://www.techiwarehouse.com/userfiles/sniffing2.jpg}
+    \item \url{http://www.soldierx.com/system/files/hdb/gerald_combs.png}
+  \end{itemize}
+}
+
+\end{document}
+
+\end{document}
